@@ -107,6 +107,8 @@ var DropdownMenu = function (_PureComponent) {
       if (e.target === items[id]) {
         _this.close(e);
       }
+    }, _this._registerWrapperRef = function (ref) {
+      return _this._wrapperRef = ref;
     }, _this._registerPortalRef = function (ref) {
       return _this._portalRef = ref;
     }, _this._setDropdownWidth = function (width) {
