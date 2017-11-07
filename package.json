@@ -1,7 +1,7 @@
 {
-  "name": "react-dd-menu",
-  "version": "2.0.2",
-  "description": "A react dropdown menu.",
+  "name": "react-dd-menu-portal",
+  "version": "0.0.1",
+  "description": "A fork of react-dd-menu built with React portals to hoist dropdown menus in the DOM.",
   "main": "dist/index.js",
   "scripts": {
     "scripts": "babel ./src/js --out-dir ./dist",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mlaursen/react-dd-menu.git"
+    "url": "git+https://github.com/williamboman/react-dd-menu.git"
   },
   "keywords": [
     "react",
@@ -23,10 +23,7 @@
   ],
   "author": "mlaursen",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mlaursen/react-dd-menu/issues"
-  },
-  "homepage": "https://github.com/mlaursen/react-dd-menu#readme",
+  "homepage": "https://github.com/williamboman/react-dd-menu#readme",
   "dependencies": {
     "classnames": "^2.1.3",
     "prop-types": "^15.5.10",
