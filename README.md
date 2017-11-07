@@ -1,5 +1,6 @@
-# react-dd-menu
-A React dropdown menu
+# react-dd-menu-portal
+
+A fork of the react-dd-menu project. With (hard-coded) support for React portals. Undocumented and very dirty implementation. Use at own risk.
 
 Live Example: [React Dropdown Menu](http://mlaursen.github.io/react-dd-menu)
 
@@ -283,18 +284,4 @@ This will output all the css and js files into `./dist`;
 
 ### Versions
 
-- 0.0.2 - Fixed removing the click event listener
-- 0.0.3 - Positioning fixes and convenience props for different dropdown menu configs
-- 0.0.4 - Fixed width for firefox and added convenience props for sizes
-- 0.0.5 - Fixed Button font size, added examples
-- 1.0.0 - Added nested dropdown menus, a separator class, drop-up? menus.
-- 1.0.1 - Fixed exports for ES5 :(
-- 1.0.2 - Added delay to nested dropdown menu closing and added github page for examples.
-- 1.0.3 - Fixed problem with multiple menus and added ability to disable animation
-- 1.0.4 - Upgraded to React 0.14.0
-- 1.0.5 - Added ability to disable onClickInside and onClickOutside close of the menus. Added Touch/click support for nested menus.
-- 1.0.6 - No new features. Upgraded dev stuff to babel 6 and separated example
-- 1.0.7 - Updated to support React 15 as peer dependencies. No real changes needed
-- 2.0.0 - Removed PureRenderMixin peerDependecy and switched to PureComponent instead.
-- 2.0.1 - Updated for React 15.5
-- 2.0.2 - Small bugfix for any child elements that had onClick handlers. [#52]
+- 0.0.1 - add React portal support
