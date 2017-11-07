@@ -157,7 +157,7 @@ export default class DropdownMenu extends PureComponent {
     }
   };
 
-  _registerPortalRef = (ref) = this._portalRef = ref
+  _registerPortalRef = (ref) => this._portalRef = ref
   _setDropdownWidth = (width) => this.setState({dropdownWidth: width})
 
   render() {
