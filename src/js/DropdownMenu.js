@@ -199,7 +199,7 @@ export default class DropdownMenu extends PureComponent {
                 (this.state.dropdownToggleComponentWidth - this.state.dropdownWidth) / 2
               )
             ) : 'initial',
-            right: alignment === 'right' ? (this.state.portalWidth - this.state.dropdownRightOffset) : 'initial'
+            right: alignment === 'right' ? this.state.dropdownRightOffset : 'initial'
           }}>
             <CSSTransitionGroup {...transitionProps}>
               {this.props.isOpen &&
