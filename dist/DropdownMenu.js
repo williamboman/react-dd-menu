@@ -220,7 +220,7 @@ var DropdownMenu = function (_PureComponent) {
                 position: 'absolute',
                 top: !upwards ? this.state.dropdownTopOffset + this.state.dropdownToggleComponentHeight : this.state.dropdownTopOffset,
                 left: alignment === 'left' ? this.state.dropdownLeftOffset : alignment === 'center' && this.state.dropdownWidth != null ? this.state.dropdownLeftOffset + (this.state.dropdownToggleComponentWidth - this.state.dropdownWidth) / 2 : 'initial',
-                right: alignment === 'right' ? this.state.portalWidth - this.state.dropdownRightOffset : 'initial'
+                right: alignment === 'right' ? this.state.dropdownRightOffset : 'initial'
               } },
             _react2.default.createElement(
               _CSSTransitionGroup2.default,
