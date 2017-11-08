@@ -134,7 +134,7 @@ var DropdownMenu = function (_PureComponent) {
           portalWidth: portalNodeRect ? portalNodeRect.width : window.outerWidth,
           dropdownTopOffset: (portalNodeRect ? top - portalNodeRect.top : top) + (nextProps.portalNode ? nextProps.portalNode.scrollTop : 0),
           dropdownLeftOffset: portalNodeRect ? left - portalNodeRect.left : left,
-          dropdownRightOffset: portalNodeRect ? right - portalNodeRect.right : right,
+          dropdownRightOffset: portalNodeRect ? portalNodeRect.right - right : right,
           dropdownToggleComponentHeight: height,
           dropdownToggleComponentWidth: width
         });
