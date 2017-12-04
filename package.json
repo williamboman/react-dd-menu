@@ -1,6 +1,6 @@
 {
   "name": "react-dd-menu-portal",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A fork of react-dd-menu built with React portals to hoist dropdown menus in the DOM.",
   "main": "dist/index.js",
   "scripts": {
