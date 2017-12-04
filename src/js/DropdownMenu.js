@@ -169,7 +169,8 @@ export default class DropdownMenu extends PureComponent {
       'dd-menu',
       `dd-menu-${alignment}`,
       { 'dd-menu-inverse': inverse },
-      size ? ('dd-menu-' + size) : null
+      size ? ('dd-menu-' + size) : null,
+      { 'dd-menu-open': this.props.isOpen },
     );
 
     const { textAlign, upwards, animAlign, animate, enterTimeout, leaveTimeout } = this.props;
