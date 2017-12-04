@@ -184,7 +184,7 @@ var DropdownMenu = function (_PureComponent) {
 
       var alignment = menuAlign || align;
 
-      var menuClassName = (0, _classnames2.default)('dd-menu', 'dd-menu-' + alignment, { 'dd-menu-inverse': inverse }, size ? 'dd-menu-' + size : null);
+      var menuClassName = (0, _classnames2.default)('dd-menu', 'dd-menu-' + alignment, { 'dd-menu-inverse': inverse }, size ? 'dd-menu-' + size : null, { 'dd-menu-open': this.props.isOpen });
 
       var _props2 = this.props,
           textAlign = _props2.textAlign,
