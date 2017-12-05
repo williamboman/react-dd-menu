@@ -132,7 +132,7 @@ var DropdownMenu = function (_PureComponent) {
         var portalNodeRect = nextProps.portalNode && nextProps.portalNode.getBoundingClientRect();
         this.setState({
           portalWidth: portalNodeRect ? portalNodeRect.width : window.outerWidth,
-          dropdownTopOffset: (portalNodeRect ? top - portalNodeRect.top : top) + (nextProps.portalNode ? nextProps.portalNode.scrollTop : 0),
+          dropdownTopOffset: (portalNodeRect ? top - portalNodeRect.top : top) + (nextProps.portalNode ? nextProps.fixed ? 0 : nextProps.portalNode.scrollTop : 0),
           dropdownLeftOffset: (portalNodeRect ? left - portalNodeRect.left : left) + nextProps.xOffset,
           dropdownRightOffset: portalNodeRect ? portalNodeRect.right - right : right,
           dropdownToggleComponentHeight: height,
@@ -184,7 +184,7 @@ var DropdownMenu = function (_PureComponent) {
 
       var alignment = menuAlign || align;
 
-      var menuClassName = (0, _classnames2.default)('dd-menu', 'dd-menu-' + alignment, { 'dd-menu-inverse': inverse }, size ? 'dd-menu-' + size : null, { 'dd-menu-open': this.props.isOpen });
+      var menuClassName = (0, _classnames2.default)('dd-menu', 'dd-menu-' + alignment, { 'dd-menu-inverse': inverse }, size ? 'dd-menu-' + size : null, { 'dd-menu-open': this.props.isOpen }, this.props.menuClassName);
 
       var _props2 = this.props,
           textAlign = _props2.textAlign,
@@ -263,7 +263,8 @@ DropdownMenu.propTypes = {
   closeOnInsideClick: _propTypes2.default.bool,
   closeOnOutsideClick: _propTypes2.default.bool,
   xOffset: _propTypes2.default.number,
-  fixed: _propTypes2.default.bool
+  fixed: _propTypes2.default.bool,
+  menuClassName: _propTypes2.default.string
 };
 DropdownMenu.defaultProps = {
   inverse: false,
