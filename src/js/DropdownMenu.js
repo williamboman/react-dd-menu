@@ -35,6 +35,7 @@ export default class DropdownMenu extends PureComponent {
     closeOnInsideClick: PropTypes.bool,
     closeOnOutsideClick: PropTypes.bool,
     xOffset: PropTypes.number,
+    fixed: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -52,6 +53,7 @@ export default class DropdownMenu extends PureComponent {
     closeOnInsideClick: true,
     closeOnOutsideClick: true,
     xOffset: 0,
+    fixed: false,
   };
 
   state = {
@@ -194,7 +196,7 @@ export default class DropdownMenu extends PureComponent {
         {this.props.toggle}
         <Portal node={this.props.portalNode || root} ref={this._registerPortalRef}>
           <div className={menuClassName}  style={{
-            position: 'absolute',
+            position: this.props.fixed ? 'fixed' : 'absolute',
             top: !upwards ? (this.state.dropdownTopOffset + this.state.dropdownToggleComponentHeight) : this.state.dropdownTopOffset,
             left: alignment === 'left' ? this.state.dropdownLeftOffset :
             alignment === 'center' && this.state.dropdownWidth != null ? (
