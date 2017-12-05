@@ -34,6 +34,7 @@ export default class DropdownMenu extends PureComponent {
     leaveTimeout: PropTypes.number,
     closeOnInsideClick: PropTypes.bool,
     closeOnOutsideClick: PropTypes.bool,
+    xOffset: PropTypes.number,
   };
 
   static defaultProps = {
@@ -50,6 +51,7 @@ export default class DropdownMenu extends PureComponent {
     leaveTimeout: 150,
     closeOnInsideClick: true,
     closeOnOutsideClick: true,
+    xOffset: 0,
   };
 
   state = {
@@ -73,7 +75,7 @@ export default class DropdownMenu extends PureComponent {
       this.setState({
         portalWidth: portalNodeRect ? portalNodeRect.width : window.outerWidth,
         dropdownTopOffset: (portalNodeRect ? top - portalNodeRect.top : top) + (nextProps.portalNode ? nextProps.portalNode.scrollTop : 0),
-        dropdownLeftOffset: portalNodeRect ? left - portalNodeRect.left : left,
+        dropdownLeftOffset: (portalNodeRect ? left - portalNodeRect.left : left) + nextProps.xOffset,
         dropdownRightOffset: portalNodeRect ? portalNodeRect.right - right : right,
         dropdownToggleComponentHeight: height,
         dropdownToggleComponentWidth: width,
