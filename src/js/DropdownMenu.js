@@ -36,6 +36,7 @@ export default class DropdownMenu extends PureComponent {
     closeOnOutsideClick: PropTypes.bool,
     xOffset: PropTypes.number,
     fixed: PropTypes.bool,
+    menuClassName: PropTypes.string,
   };
 
   static defaultProps = {
@@ -76,7 +77,7 @@ export default class DropdownMenu extends PureComponent {
       const portalNodeRect = nextProps.portalNode && nextProps.portalNode.getBoundingClientRect()
       this.setState({
         portalWidth: portalNodeRect ? portalNodeRect.width : window.outerWidth,
-        dropdownTopOffset: (portalNodeRect ? top - portalNodeRect.top : top) + (nextProps.portalNode ? nextProps.portalNode.scrollTop : 0),
+        dropdownTopOffset: (portalNodeRect ? top - portalNodeRect.top : top) + (nextProps.portalNode ? (nextProps.fixed ? 0 : nextProps.portalNode.scrollTop) : 0),
         dropdownLeftOffset: (portalNodeRect ? left - portalNodeRect.left : left) + nextProps.xOffset,
         dropdownRightOffset: portalNodeRect ? portalNodeRect.right - right : right,
         dropdownToggleComponentHeight: height,
@@ -175,6 +176,7 @@ export default class DropdownMenu extends PureComponent {
       { 'dd-menu-inverse': inverse },
       size ? ('dd-menu-' + size) : null,
       { 'dd-menu-open': this.props.isOpen },
+      this.props.menuClassName,
     );
 
     const { textAlign, upwards, animAlign, animate, enterTimeout, leaveTimeout } = this.props;
