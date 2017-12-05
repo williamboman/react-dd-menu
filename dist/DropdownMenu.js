@@ -217,7 +217,7 @@ var DropdownMenu = function (_PureComponent) {
           _react2.default.createElement(
             'div',
             { className: menuClassName, style: {
-                position: 'absolute',
+                position: this.props.fixed ? 'fixed' : 'absolute',
                 top: !upwards ? this.state.dropdownTopOffset + this.state.dropdownToggleComponentHeight : this.state.dropdownTopOffset,
                 left: alignment === 'left' ? this.state.dropdownLeftOffset : alignment === 'center' && this.state.dropdownWidth != null ? this.state.dropdownLeftOffset + (this.state.dropdownToggleComponentWidth - this.state.dropdownWidth) / 2 : 'initial',
                 right: alignment === 'right' ? this.state.dropdownRightOffset : 'initial'
@@ -262,7 +262,8 @@ DropdownMenu.propTypes = {
   leaveTimeout: _propTypes2.default.number,
   closeOnInsideClick: _propTypes2.default.bool,
   closeOnOutsideClick: _propTypes2.default.bool,
-  xOffset: _propTypes2.default.number
+  xOffset: _propTypes2.default.number,
+  fixed: _propTypes2.default.bool
 };
 DropdownMenu.defaultProps = {
   inverse: false,
@@ -278,7 +279,8 @@ DropdownMenu.defaultProps = {
   leaveTimeout: 150,
   closeOnInsideClick: true,
   closeOnOutsideClick: true,
-  xOffset: 0
+  xOffset: 0,
+  fixed: false
 };
 DropdownMenu.MENU_SIZES = MENU_SIZES;
 DropdownMenu.ALIGNMENTS = ALIGNMENTS;
