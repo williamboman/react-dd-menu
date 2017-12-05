@@ -133,7 +133,7 @@ var DropdownMenu = function (_PureComponent) {
         this.setState({
           portalWidth: portalNodeRect ? portalNodeRect.width : window.outerWidth,
           dropdownTopOffset: (portalNodeRect ? top - portalNodeRect.top : top) + (nextProps.portalNode ? nextProps.portalNode.scrollTop : 0),
-          dropdownLeftOffset: portalNodeRect ? left - portalNodeRect.left : left,
+          dropdownLeftOffset: (portalNodeRect ? left - portalNodeRect.left : left) + nextProps.xOffset,
           dropdownRightOffset: portalNodeRect ? portalNodeRect.right - right : right,
           dropdownToggleComponentHeight: height,
           dropdownToggleComponentWidth: width
@@ -261,7 +261,8 @@ DropdownMenu.propTypes = {
   enterTimeout: _propTypes2.default.number,
   leaveTimeout: _propTypes2.default.number,
   closeOnInsideClick: _propTypes2.default.bool,
-  closeOnOutsideClick: _propTypes2.default.bool
+  closeOnOutsideClick: _propTypes2.default.bool,
+  xOffset: _propTypes2.default.number
 };
 DropdownMenu.defaultProps = {
   inverse: false,
@@ -276,7 +277,8 @@ DropdownMenu.defaultProps = {
   enterTimeout: 150,
   leaveTimeout: 150,
   closeOnInsideClick: true,
-  closeOnOutsideClick: true
+  closeOnOutsideClick: true,
+  xOffset: 0
 };
 DropdownMenu.MENU_SIZES = MENU_SIZES;
 DropdownMenu.ALIGNMENTS = ALIGNMENTS;
