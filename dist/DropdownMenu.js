@@ -132,7 +132,7 @@ var DropdownMenu = function (_PureComponent) {
         var portalNodeRect = nextProps.portalNode && nextProps.portalNode.getBoundingClientRect();
         this.setState({
           portalWidth: portalNodeRect ? portalNodeRect.width : window.outerWidth,
-          dropdownTopOffset: (portalNodeRect ? top - portalNodeRect.top : top) + (nextProps.portalNode ? nextProps.fixed ? 0 : nextProps.portalNode.scrollTop : 0),
+          dropdownTopOffset: (portalNodeRect && !nextProps.fixed ? top - portalNodeRect.top : top) + (nextProps.portalNode ? nextProps.fixed ? 0 : nextProps.portalNode.scrollTop : 0),
           dropdownLeftOffset: (portalNodeRect ? left - portalNodeRect.left : left) + nextProps.xOffset,
           dropdownRightOffset: portalNodeRect ? portalNodeRect.right - right : right,
           dropdownToggleComponentHeight: height,
