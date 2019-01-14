@@ -33,9 +33,9 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "react": "*",
+    "react": "^15.4.2",
     "react-addons-css-transition-group": "*",
     "react-addons-pure-render-mixin": "*",
-    "react-dom": "*"
+    "react-dom": "^15.4.2"
   }
 }
