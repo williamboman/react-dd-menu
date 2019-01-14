@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "scripts": "babel ./src/js --out-dir ./dist",
-    "styles": "sass --style expanded --line ./src/scss/react-dd-menu.scss ./dist/react-dd-menu.css && sass --style compressed ./src/scss/react-dd-menu.scss ./dist/react-dd-menu.min.css",
+    "styles": "sass --style expanded ./src/scss/react-dd-menu.scss ./dist/react-dd-menu.css && sass --style compressed ./src/scss/react-dd-menu.scss ./dist/react-dd-menu.min.css",
     "prebuild": "rimraf dist",
     "build": "npm run scripts && npm run styles",
     "postbuild": "postcss --use autoprefixer ./dist/*.css -d ./dist"
@@ -51,6 +51,6 @@
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
     "rimraf": "^2.5.1",
-    "saas": "^1.0.0"
+    "sass": "^1.16.0"
   }
 }
