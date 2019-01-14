@@ -82,13 +82,13 @@ export default class DropdownMenu extends PureComponent {
 
   close = (e) => {
     // ensure eventual event handlers registered by consumers via React props are evaluated first
-    setTimeout(() => this.props.close(e))
+    setTimeout(() => this.props.close(e));
   }
 
   handleMenuItemKeyDown = (e) => {
     const key = e.which || e.keyCode;
     if(key === SPACEBAR) {
-      this.close(e)
+      this.close(e);
       e.preventDefault();
     }
   };
@@ -109,7 +109,7 @@ export default class DropdownMenu extends PureComponent {
       target = target.parentNode;
     }
 
-    this.close(e)
+    this.close(e);
   };
 
   handleKeyDown = (e) => {
@@ -122,7 +122,7 @@ export default class DropdownMenu extends PureComponent {
     const id = e.shiftKey ? 1 : items.length - 1;
 
     if(e.target === items[id]) {
-      this.close(e)
+      this.close(e);
     }
   };
 
