@@ -26,6 +26,8 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _reactPortal = require('react-portal');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38,6 +40,10 @@ var TAB = 9;
 var SPACEBAR = 32;
 var ALIGNMENTS = ['center', 'right', 'left'];
 var MENU_SIZES = ['sm', 'md', 'lg', 'xl'];
+
+var root = document.createElement('div');
+root.className = 'DropdownMenu-portal';
+document.body.appendChild(root);
 
 var DropdownMenu = function (_PureComponent) {
   _inherits(DropdownMenu, _PureComponent);
@@ -53,7 +59,15 @@ var DropdownMenu = function (_PureComponent) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DropdownMenu.__proto__ || Object.getPrototypeOf(DropdownMenu)).call.apply(_ref, [this].concat(args))), _this), _this.close = function (e) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DropdownMenu.__proto__ || Object.getPrototypeOf(DropdownMenu)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      dropdownTopOffset: -10000,
+      dropdownLeftOffset: -10000,
+      dropdownRightOffset: 0,
+      dropdownToggleComponentHeight: 0,
+      dropdownToggleComponentWidth: 0,
+      dropdownWidth: null,
+      portalWidth: 0
+    }, _this.close = function (e) {
       // ensure eventual event handlers registered by consumers via React props are evaluated first
       setTimeout(function () {
         return _this.props.close(e);
@@ -69,7 +83,7 @@ var DropdownMenu = function (_PureComponent) {
         return;
       }
 
-      var node = _reactDom2.default.findDOMNode(_this);
+      var node = _reactDom2.default.findDOMNode(_this._portalRef);
       var target = e.target;
 
       while (target.parentNode) {
@@ -87,23 +101,53 @@ var DropdownMenu = function (_PureComponent) {
         return;
       }
 
-      var items = _reactDom2.default.findDOMNode(_this).querySelectorAll('button,a');
+      var items = _reactDom2.default.findDOMNode(_this._portalRef).querySelectorAll('button,a');
       var id = e.shiftKey ? 1 : items.length - 1;
 
       if (e.target === items[id]) {
         _this.close(e);
       }
+    }, _this._registerWrapperRef = function (ref) {
+      return _this._wrapperRef = ref;
+    }, _this._registerPortalRef = function (ref) {
+      return _this._portalRef = ref;
+    }, _this._setDropdownWidth = function (width) {
+      return _this.setState({ dropdownWidth: width });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(DropdownMenu, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (!this.props.isOpen && nextProps.isOpen) {
+        var wrapperNode = this._wrapperRef;
+
+        var _wrapperNode$getBound = wrapperNode.getBoundingClientRect(),
+            top = _wrapperNode$getBound.top,
+            left = _wrapperNode$getBound.left,
+            right = _wrapperNode$getBound.right,
+            height = _wrapperNode$getBound.height,
+            width = _wrapperNode$getBound.width;
+
+        var portalNodeRect = nextProps.portalNode && nextProps.portalNode.getBoundingClientRect();
+        this.setState({
+          portalWidth: portalNodeRect ? portalNodeRect.width : window.outerWidth,
+          dropdownTopOffset: (portalNodeRect && !nextProps.fixed ? top - portalNodeRect.top : top) + (nextProps.portalNode ? nextProps.fixed ? 0 : nextProps.portalNode.scrollTop : 0),
+          dropdownLeftOffset: (portalNodeRect ? left - portalNodeRect.left : left) + nextProps.xOffset,
+          dropdownRightOffset: portalNodeRect ? portalNodeRect.right - right : right,
+          dropdownToggleComponentHeight: height,
+          dropdownToggleComponentWidth: width
+        });
+      }
+    }
+  }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
       if (this.props.isOpen === prevProps.isOpen) {
         return;
       }
 
-      var menuItems = _reactDom2.default.findDOMNode(this).querySelector('.dd-menu > .dd-menu-items');
+      var menuItems = _reactDom2.default.findDOMNode(this._portalRef).querySelector('.dd-menu-items');
       if (this.props.isOpen && !prevProps.isOpen) {
         this.lastWindowClickEvent = this.handleClickOutside;
         document.addEventListener('click', this.lastWindowClickEvent);
@@ -138,8 +182,9 @@ var DropdownMenu = function (_PureComponent) {
           size = _props.size,
           className = _props.className;
 
+      var alignment = menuAlign || align;
 
-      var menuClassName = (0, _classnames2.default)('dd-menu', 'dd-menu-' + (menuAlign || align), { 'dd-menu-inverse': inverse }, className, size ? 'dd-menu-' + size : null);
+      var menuClassName = (0, _classnames2.default)('dd-menu', 'dd-menu-' + alignment, { 'dd-menu-inverse': inverse }, size ? 'dd-menu-' + size : null, { 'dd-menu-open': this.props.isOpen }, this.props.menuClassName);
 
       var _props2 = this.props,
           textAlign = _props2.textAlign,
@@ -164,15 +209,32 @@ var DropdownMenu = function (_PureComponent) {
 
       return _react2.default.createElement(
         'div',
-        { className: menuClassName },
+        { className: (0, _classnames2.default)('dd-menu-wrap', className), ref: this._registerWrapperRef },
         this.props.toggle,
         _react2.default.createElement(
-          _CSSTransitionGroup2.default,
-          transitionProps,
-          this.props.isOpen && _react2.default.createElement(
-            'ul',
-            { key: 'items', className: listClassName },
-            this.props.children
+          _reactPortal.Portal,
+          { node: this.props.portalNode || root, ref: this._registerPortalRef },
+          _react2.default.createElement(
+            'div',
+            { className: menuClassName, style: {
+                position: this.props.fixed ? 'fixed' : 'absolute',
+                top: !upwards ? this.state.dropdownTopOffset + this.state.dropdownToggleComponentHeight : this.state.dropdownTopOffset,
+                left: alignment === 'left' ? this.state.dropdownLeftOffset : alignment === 'center' && this.state.dropdownWidth != null ? this.state.dropdownLeftOffset + (this.state.dropdownToggleComponentWidth - this.state.dropdownWidth) / 2 : 'initial',
+                right: alignment === 'right' ? this.state.dropdownRightOffset : 'initial'
+              } },
+            _react2.default.createElement(
+              _CSSTransitionGroup2.default,
+              transitionProps,
+              this.props.isOpen && _react2.default.createElement(
+                ChildWrapper,
+                { hide: this.state.dropdownWidth == null, setWidth: this._setDropdownWidth },
+                _react2.default.createElement(
+                  'ul',
+                  { key: 'items', className: listClassName },
+                  this.props.children
+                )
+              )
+            )
           )
         )
       );
@@ -199,7 +261,10 @@ DropdownMenu.propTypes = {
   enterTimeout: _propTypes2.default.number,
   leaveTimeout: _propTypes2.default.number,
   closeOnInsideClick: _propTypes2.default.bool,
-  closeOnOutsideClick: _propTypes2.default.bool
+  closeOnOutsideClick: _propTypes2.default.bool,
+  xOffset: _propTypes2.default.number,
+  fixed: _propTypes2.default.bool,
+  menuClassName: _propTypes2.default.string
 };
 DropdownMenu.defaultProps = {
   inverse: false,
@@ -214,9 +279,51 @@ DropdownMenu.defaultProps = {
   enterTimeout: 150,
   leaveTimeout: 150,
   closeOnInsideClick: true,
-  closeOnOutsideClick: true
+  closeOnOutsideClick: true,
+  xOffset: 0,
+  fixed: false
 };
 DropdownMenu.MENU_SIZES = MENU_SIZES;
 DropdownMenu.ALIGNMENTS = ALIGNMENTS;
 exports.default = DropdownMenu;
+
+var ChildWrapper = function (_PureComponent2) {
+  _inherits(ChildWrapper, _PureComponent2);
+
+  function ChildWrapper() {
+    var _ref2;
+
+    var _temp2, _this2, _ret2;
+
+    _classCallCheck(this, ChildWrapper);
+
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return _ret2 = (_temp2 = (_this2 = _possibleConstructorReturn(this, (_ref2 = ChildWrapper.__proto__ || Object.getPrototypeOf(ChildWrapper)).call.apply(_ref2, [this].concat(args))), _this2), _this2._regRef = function (ref) {
+      return _this2._ref = ref;
+    }, _temp2), _possibleConstructorReturn(_this2, _ret2);
+  }
+
+  _createClass(ChildWrapper, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.setWidth(this._ref.getBoundingClientRect().width);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var style = this.props.hide ? { visibility: 'hidden' } : null;
+      return _react2.default.createElement(
+        'div',
+        { style: style, ref: this._regRef },
+        this.props.children
+      );
+    }
+  }]);
+
+  return ChildWrapper;
+}(_react.PureComponent);
+
 module.exports = exports['default'];
