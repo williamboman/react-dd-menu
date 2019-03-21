@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import classnames from 'classnames';
-import {Portal} from 'react-portal'
+import {Portal} from 'react-portal';
 
 const TAB = 9;
 const SPACEBAR = 32;
 const ALIGNMENTS = ['center', 'right', 'left'];
 const MENU_SIZES = ['sm', 'md', 'lg', 'xl'];
 
-const root = document.createElement('div')
-root.className = 'DropdownMenu-portal'
-document.body.appendChild(root)
+const root = document.createElement('div');
+root.className = 'DropdownMenu-portal';
+document.body.appendChild(root);
 
 
 export default class DropdownMenu extends PureComponent {
@@ -72,9 +72,9 @@ export default class DropdownMenu extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.isOpen && nextProps.isOpen) {
-      const wrapperNode = this._wrapperRef
-      const {top, left, right, height, width} = wrapperNode.getBoundingClientRect()
-      const portalNodeRect = nextProps.portalNode && nextProps.portalNode.getBoundingClientRect()
+      const wrapperNode = this._wrapperRef;
+      const {top, left, right, height, width} = wrapperNode.getBoundingClientRect();
+      const portalNodeRect = nextProps.portalNode && nextProps.portalNode.getBoundingClientRect();
       this.setState({
         portalWidth: portalNodeRect ? portalNodeRect.width : window.outerWidth,
         dropdownTopOffset: ((portalNodeRect && !nextProps.fixed) ? top - portalNodeRect.top : top) + (nextProps.portalNode ? (nextProps.fixed ? 0 : nextProps.portalNode.scrollTop) : 0),
@@ -82,7 +82,7 @@ export default class DropdownMenu extends PureComponent {
         dropdownRightOffset: portalNodeRect ? portalNodeRect.right - right : right,
         dropdownToggleComponentHeight: height,
         dropdownToggleComponentWidth: width,
-      })
+      });
     }
   }
 
@@ -168,7 +168,7 @@ export default class DropdownMenu extends PureComponent {
 
   render() {
     const { menuAlign, align, inverse, size, className } = this.props;
-    const alignment = menuAlign || align
+    const alignment = menuAlign || align;
 
     const menuClassName = classnames(
       'dd-menu',
@@ -197,7 +197,7 @@ export default class DropdownMenu extends PureComponent {
       <div className={classnames('dd-menu-wrap', className)} ref={this._registerWrapperRef}>
         {this.props.toggle}
         <Portal node={this.props.portalNode || root} ref={this._registerPortalRef}>
-          <div className={menuClassName}  style={{
+          <div className={menuClassName} style={{
             position: this.props.fixed ? 'fixed' : 'absolute',
             top: !upwards ? (this.state.dropdownTopOffset + this.state.dropdownToggleComponentHeight) : this.state.dropdownTopOffset,
             left: alignment === 'left' ? this.state.dropdownLeftOffset :
@@ -206,7 +206,7 @@ export default class DropdownMenu extends PureComponent {
                 (this.state.dropdownToggleComponentWidth - this.state.dropdownWidth) / 2
               )
             ) : 'initial',
-            right: alignment === 'right' ? this.state.dropdownRightOffset : 'initial'
+            right: alignment === 'right' ? this.state.dropdownRightOffset : 'initial',
           }}>
             <CSSTransitionGroup {...transitionProps}>
               {this.props.isOpen &&
@@ -226,14 +226,14 @@ export default class DropdownMenu extends PureComponent {
 }
 
 class ChildWrapper extends PureComponent {
-    componentDidMount() {
-        this.props.setWidth(this._ref.getBoundingClientRect().width)
-    }
+  componentDidMount() {
+    this.props.setWidth(this._ref.getBoundingClientRect().width);
+  }
 
-    _regRef = (ref) => this._ref = ref
+  _regRef = (ref) => this._ref = ref
 
-    render() {
-        const style = this.props.hide ? { visibility: 'hidden' } : null
-        return <div style={style} ref={this._regRef}>{this.props.children}</div>
-    }
+  render() {
+    const style = this.props.hide ? { visibility: 'hidden' } : null;
+    return <div style={style} ref={this._regRef}>{this.props.children}</div>;
+  }
 }
